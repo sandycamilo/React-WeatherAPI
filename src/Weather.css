@@ -1,9 +1,9 @@
 .Weather {
-  /* background-color: wheat; */
+  /* color: pink; */
 }
 
 .Weather input {
-  border: 1px solid pink;
+  border: 2px solid pink;
   padding: 1em;
   font-size: 1em;
   margin: 0;
