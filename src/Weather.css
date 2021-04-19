@@ -1,0 +1,19 @@
+.Weather {
+  /* background-color: wheat; */
+}
+
+.Weather input {
+  border: 1px solid pink;
+  padding: 1em;
+  font-size: 1em;
+  margin: 0;
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.Weather button {
+  border: 3px solid rgb(97, 96, 96);
+  padding: 1em;
+  font-size: 1em;
+  margin: 0;
+  border-radius: 0 0.5em 0.5em 0;
+}
