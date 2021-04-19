@@ -17,19 +17,20 @@ function Weather() {
   // function to load data  
   // always returns a promise 
   async function getWeather() {
-    const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-    
-    const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}`
-    console.log(path)
-    const res = await fetch(path) //stop !
-    const json = await res.json() //stop !
-    const temp = json.main.temp
-    const humidity =json.main.humidity
-    const desc = json.weather[0].description
-    setData({ temp, humidity, desc })
-    console.log(json)
+      const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
+      
+      const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}`
+      console.log(path)
+      const res = await fetch(path) //stop !
+      const json = await res.json() //stop !
+      console.log(json)
+      const temp = json.main.temp
+      const humidity =json.main.humidity
+      const desc = json.weather[0].description
+      setData({ temp, humidity, desc })
+      console.log(json)
 
-    setData({ temp:64, desc: 'Scattered Clouds'})
+      setData({ temp:64, desc: 'Scattered Clouds'})
   }
 
   return (
