@@ -1,3 +1,7 @@
 .DisplayWeather {
   
 }
+
+.DisplayWeather .warning {
+  color: red;
+}
