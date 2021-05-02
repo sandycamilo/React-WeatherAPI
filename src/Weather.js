@@ -3,26 +3,21 @@ import './Weather.css';
 import './DisplayWeather.js';
 import DisplayWeather from './DisplayWeather.js';
 
-// notes: 
-//data ? <DisplayWeather temp={data.temp} desc={data.desc} />: null}
-//<DisplayWeather { ... data} 
-
 function Weather() { //********************************
   //calling the useState hook 
   //zip value and setZip function
   const [zip, setZip] = useState('')
   //null default value - no value
   const [data, setData] = useState(null)
+  // const [unit, setUnit] = useState('farenheit')
 
   // -------------------------------------------------
   // function to load data  
   // always returns a promise 
   async function getWeather() {
       const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-      const units = 'imperial' //standard, metric, imperial
-      const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}&units=${units}`
-      console.log(path)
-
+      const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}&units=imperial`
+      // console.log(path)
       const res = await fetch(path) //stop !
       const json = await res.json() //stop !
 
@@ -33,7 +28,6 @@ function Weather() { //********************************
         setData({ cod, message })
         return //stop here and exit!
       }
-      console.log(json)
 
       const temp = json.main.temp
       const humidity =json.main.humidity
@@ -42,7 +36,6 @@ function Weather() { //********************************
       setData({ temp, desc, humidity, cod, message})
   } 
   // -------------------------------------------------
-
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   return (
     <div className="Weather">
@@ -61,14 +54,33 @@ function Weather() { //********************************
           placeholder={'Zip Code'}
         />
         <button type="submit">Submit</button>
-        {/* drop down options  */}
-        {/* <select>
-          <option>Farenheit</option>
-          <option>Celcius</option>
-        </select> */}
-        {/* radio buttons - when they have the same name only one can be selected at a time */}
-        <label>farenheit<input type="radio" name="unit" /></label>
-        <label>celcius<input type="radio" name="unit" /></label>
+        
+        <button
+        className="location"
+        type="button"
+        onClick={ () => {
+          const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+          };
+          
+          function success(pos) {
+            const crd = pos.coords;
+          
+            console.log('Your current position is:');
+            console.log(`Latitude : ${crd.latitude}`);
+            console.log(`Longitude: ${crd.longitude}`);
+            console.log(`More or less ${crd.accuracy} meters.`);
+          }
+          
+          function error(err) {
+            console.warn(`ERROR(${err.code}): ${err.message}`);
+          }
+          
+          navigator.geolocation.getCurrentPosition(success, error, options);
+        }}
+      >Location</button>
     </form>  
     </div>
   ) // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

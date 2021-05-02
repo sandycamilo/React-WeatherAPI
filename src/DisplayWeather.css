@@ -1,7 +1,27 @@
-.DisplayWeather {
-  
-}
-
 .DisplayWeather .warning {
   color: red;
+  font-size: 30px;
+  position: relative;
+  top: -30px;
+  left: 6px;
+}
+
+.DisplayWeather h1 {
+  font-size: 100px;
+  color: rgb(155, 175, 155);
+  margin: 0;
+}
+
+.DisplayWeather h2 {
+  font-size: 30px;
+  color: rgb(155, 175, 155);
+  margin: 0;
+}
+
+.DisplayWeather small {
+  font-size: 20px;
+  color: rgb(155, 175, 155);
+  margin: 0;
+  position: relative;
+  top: 6px;
 }

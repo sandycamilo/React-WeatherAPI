@@ -1,4 +1,5 @@
 import './DisplayWeather.css';
+import DisplayTemp from './DisplayTemp'
 
 function DisplayWeather(props) {
   if (props.cod !== 200) {
@@ -10,10 +11,9 @@ function DisplayWeather(props) {
   }
   return (
     <div className="DisplayWeather">
-      <h1>{props.temp}</h1>
-      <p>{props.desc}</p>
+      <DisplayTemp temp={props.temp}/>
+      <h2>{props.desc}</h2>
       <small>Humidity:{props.humidity}</small>
-      <small>{props.cod} {props.message}</small>
     </div>
   )
 }
