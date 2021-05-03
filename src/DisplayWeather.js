@@ -12,8 +12,10 @@ function DisplayWeather(props) {
   return (
     <div className="DisplayWeather">
       <DisplayTemp temp={props.temp}/>
+      <h2>{props.name}</h2>
       <h2>{props.desc}</h2>
       <small>Humidity:{props.humidity}</small>
+      
     </div>
   )
 }

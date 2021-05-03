@@ -12,17 +12,25 @@ function Weather() { //********************************
   // const [unit, setUnit] = useState('farenheit')
 
   // -------------------------------------------------
+  async function getWeatherByZip() {
+    const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
+    const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}&units=imperial`
+    getWeather(path)
+  }
+
+  async function getWeatherByLocation(lat, lon) {
+    const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
+    const path = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}&units=imperial`
+    getWeather(path)
+  }
   // function to load data  
   // always returns a promise 
-  async function getWeather() {
-      const apikey= process.env.REACT_APP_OPENWEATHERMAP_API_KEY
-      const path = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apikey}&units=imperial`
-      // console.log(path)
+  async function getWeather(path) {
+    try {
       const res = await fetch(path) //stop !
       const json = await res.json() //stop !
-
       const { cod, message } = json
-      console.log(json)
+      // console.log(json)
 
       if (cod !== 200) { // if 404 == "404" true ... 404 === "404" false
         setData({ cod, message })
@@ -32,9 +40,13 @@ function Weather() { //********************************
       const temp = json.main.temp
       const humidity =json.main.humidity
       const desc = json.weather[0].description
+      const name = json.name
 
-      setData({ temp, desc, humidity, cod, message})
-  } 
+      setData({ temp, desc, humidity, cod, message, name})
+     } catch(err) {
+       console.log(err.message)
+     }
+    } 
   // -------------------------------------------------
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   return (
@@ -44,7 +56,7 @@ function Weather() { //********************************
       <form onSubmit={e => {
         e.preventDefault()
         //when submit the form you call get weather to load data 
-        getWeather()
+        getWeatherByZip()
       } }>
         <input 
           value= {zip}
@@ -54,7 +66,7 @@ function Weather() { //********************************
           placeholder={'Zip Code'}
         />
         <button type="submit">Submit</button>
-        
+
         <button
         className="location"
         type="button"
@@ -67,11 +79,7 @@ function Weather() { //********************************
           
           function success(pos) {
             const crd = pos.coords;
-          
-            console.log('Your current position is:');
-            console.log(`Latitude : ${crd.latitude}`);
-            console.log(`Longitude: ${crd.longitude}`);
-            console.log(`More or less ${crd.accuracy} meters.`);
+            getWeatherByLocation(crd.latitude, crd.longitude)
           }
           
           function error(err) {
